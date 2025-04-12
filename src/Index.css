@@ -1,0 +1,20 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 100px white inset !important;
+    -webkit-text-fill-color: #333 !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* For dark mode support */
+[data-mui-color-scheme="dark"] input:-webkit-autofill,
+[data-mui-color-scheme="dark"] input:-webkit-autofill:hover,
+[data-mui-color-scheme="dark"] input:-webkit-autofill:focus,
+[data-mui-color-scheme="dark"] input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 100px #121212 inset !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+/* the autofill color from material ui/chrome browser looks to ugly and overlays the label,
+that is why I removed the autofill */

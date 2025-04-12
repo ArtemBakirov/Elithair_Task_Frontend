@@ -5,6 +5,7 @@ import {
   ListItemText,
   Typography,
   Divider,
+  Card,
 } from '@mui/material';
 import { TimeSlot } from '../types/types';
 
@@ -18,7 +19,7 @@ export const BookedSlots: React.FC<BookedSlotsProps> = ({ slots }) => {
   );
 
   return (
-    <div>
+    <Card variant="outlined" sx={{ p: 2 }}>
       <Typography variant="h5" gutterBottom>
         Booking Summary
       </Typography>
@@ -43,6 +44,6 @@ export const BookedSlots: React.FC<BookedSlotsProps> = ({ slots }) => {
           ))}
         </List>
       )}
-    </div>
+    </Card>
   );
 };

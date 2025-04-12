@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { styled } from '@mui/material/styles';
 import {
   Button,
   Dialog,
@@ -33,12 +34,21 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
     onSubmit({ ...data, slotId });
   };
 
+  const StyledTextField = styled(TextField)({
+    '& input:-webkit-autofill': {
+      transition: 'background-color 600000s 0s, color 600000s 0s',
+    },
+    '& input:-webkit-autofill:focus': {
+      transition: 'background-color 600000s 0s, color 600000s 0s',
+    },
+  });
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Book Time Slot</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <TextField
+          <StyledTextField
             margin="dense"
             label="Name"
             fullWidth
@@ -46,7 +56,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
             error={!!errors.name}
             helperText={errors.name?.message}
           />
-          <TextField
+          <StyledTextField
             margin="dense"
             label="Email"
             type="email"

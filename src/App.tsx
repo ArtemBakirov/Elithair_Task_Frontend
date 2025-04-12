@@ -6,7 +6,16 @@ import { BookedSlots } from './components/BookedSlots';
 import axios from 'axios';
 import { TimeSlot, ReservationData } from './types/types';
 
+/* custom css styles */
+import './Index.css';
+
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 function App() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   const [slots, setSlots] = useState<TimeSlot[]>([]);
   const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -78,8 +87,17 @@ function App() {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Typography
+        sx={{
+          textAlign: 'center',
+          mb: 4,
+          fontWeight: 'medium',
+          color: theme.palette.primary.main,
+        }}
+        variant="h4"
+        gutterBottom
+      >
         Meeting Slot Reservation
       </Typography>
       {/* Period selector */}
@@ -102,52 +120,76 @@ function App() {
           Afternoon (3:45 PM - 5:45 PM)
         </Button>
       </Box>
-      <Typography variant="h5" gutterBottom>
-        Available Slots (
-        {pagination.currentPeriod === 'morning'
-          ? '10:00 AM - 3:00 PM'
-          : '3:45 PM - 5:45 PM'}
-        )
-      </Typography>
-      slots:
-      {currentSlots.map(slot => (
-        <TimeSlotComponent
-          key={slot._id}
-          slot={slot}
-          onSelect={handleSlotSelect}
-        />
-      ))}
-      {/* Pagination controls */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, mb: 4 }}>
-        <Button
-          variant="contained"
-          onClick={() => paginate(pagination.currentPage - 1)}
-          disabled={pagination.currentPage === 1}
-          sx={{ mr: 2 }}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: isSmallScreen ? 'column' : 'row',
+          gap: 4,
+          alignItems: 'flex-start',
+        }}
+      >
+        {/* Slots column */}
+        <Box
+          sx={{
+            flex: isSmallScreen ? 'none' : 1,
+            width: isSmallScreen ? '100%' : 'auto',
+          }}
         >
-          Back
-        </Button>
-        <Typography variant="body1" sx={{ mx: 2, alignSelf: 'center' }}>
-          Page {pagination.currentPage} of{' '}
-          {Math.ceil(currentPeriodSlots.length / pagination.slotsPerPage)}
-        </Typography>
-        <Button
-          variant="contained"
-          onClick={() => paginate(pagination.currentPage + 1)}
-          disabled={
-            pagination.currentPage ===
-            Math.ceil(currentPeriodSlots.length / pagination.slotsPerPage)
-          }
+          <Typography variant="h5" gutterBottom>
+            Available Slots (
+            {pagination.currentPeriod === 'morning'
+              ? '10:00 AM - 3:00 PM'
+              : '3:45 PM - 5:45 PM'}
+            )
+          </Typography>
+          {currentSlots.map(slot => (
+            <TimeSlotComponent
+              key={slot._id}
+              slot={slot}
+              onSelect={handleSlotSelect}
+            />
+          ))}
+          {/* Pagination controls */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, mb: 4 }}>
+            <Button
+              variant="contained"
+              onClick={() => paginate(pagination.currentPage - 1)}
+              disabled={pagination.currentPage === 1}
+              sx={{ mr: 2 }}
+            >
+              Back
+            </Button>
+            <Typography variant="body1" sx={{ mx: 2, alignSelf: 'center' }}>
+              Page {pagination.currentPage} of{' '}
+              {Math.ceil(currentPeriodSlots.length / pagination.slotsPerPage)}
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={() => paginate(pagination.currentPage + 1)}
+              disabled={
+                pagination.currentPage ===
+                Math.ceil(currentPeriodSlots.length / pagination.slotsPerPage)
+              }
+            >
+              Next
+            </Button>
+          </Box>
+          {/* Display current page info */}
+        </Box>
+        <Box
+          sx={{
+            mb: 6,
+            flex: isSmallScreen ? 'none' : '0 0 350px',
+            width: isSmallScreen ? '100%' : '350px',
+            position: isSmallScreen ? 'static' : 'sticky',
+            top: 20,
+            alignSelf: 'flex-start',
+          }}
         >
-          Next
-        </Button>
+          <BookedSlots slots={slots} />
+        </Box>
       </Box>
-      {/* Display current page info */}
-      <Typography variant="body1" align="center" sx={{ mb: 2 }}>
-        Page {pagination.currentPage} of{' '}
-        {Math.ceil(slots.length / pagination.slotsPerPage)}
-      </Typography>
-      <BookedSlots slots={slots} />
+
       <ReservationForm
         open={isFormOpen}
         onClose={() => setIsFormOpen(false)}
