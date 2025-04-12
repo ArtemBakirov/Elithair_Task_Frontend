@@ -49,8 +49,9 @@ function App() {
   useEffect(() => {
     const fetchSlots = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/slots');
-        console.log('response', response.data);
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_PRODUCTION_BASE_URL}/slots`,
+        );
         setSlots(response.data);
       } catch (error) {
         console.error('Error fetching slots:', error);
@@ -76,7 +77,7 @@ function App() {
   const handleReservationSubmit = async (data: ReservationData) => {
     try {
       const response = await axios.post(
-        'http://localhost:5001/api/reserve',
+        `${import.meta.env.VITE_BACKEND_PRODUCTION_BASE_URL}/reserve`,
         data,
       );
       setSlots(response.data);
