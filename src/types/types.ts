@@ -1,16 +1,26 @@
+export interface Booking {
+  name: string;
+  email: string;
+  bookedAt: string;
+}
+
 export interface TimeSlot {
-    id: string;
-    startTime: string;
-    endTime: string;
-    isBooked: boolean;
-    bookedBy?: {
-        name: string;
-        email: string;
-    };
+  _id: string;
+  startTime: string;
+  endTime: string;
+  isConsumable: boolean;
+  bookings: Booking[];
+  maxBookings?: number;
+  period: 'morning' | 'afternoon';
 }
 
 export interface ReservationData {
-    name: string;
-    email: string;
-    slotId: string;
+  name: string;
+  email: string;
+  slotId: string;
+}
+
+export interface PaginationState {
+  currentPage: number;
+  slotsPerPage: number;
 }
