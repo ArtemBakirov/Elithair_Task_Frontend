@@ -48,6 +48,10 @@ function App() {
 
   useEffect(() => {
     const fetchSlots = async () => {
+      console.log(
+        'Fetching slots from url',
+        import.meta.env.VITE_BACKEND_PRODUCTION_BASE_URL,
+      );
       try {
         const response = await axios.get<TimeSlot[]>(
           `${import.meta.env.VITE_BACKEND_PRODUCTION_BASE_URL}/slots`,
