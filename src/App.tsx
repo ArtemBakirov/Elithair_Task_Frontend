@@ -26,9 +26,10 @@ function App() {
   });
 
   // Filter slots by current period
-  const currentPeriodSlots = slots.filter(
-    slot => slot.period === pagination.currentPeriod,
-  );
+  const currentPeriodSlots =
+    slots.length > 0
+      ? slots.filter(slot => slot.period === pagination.currentPeriod)
+      : [];
 
   // Get current slots for pagination
   const indexOfLastSlot = pagination.currentPage * pagination.slotsPerPage;
