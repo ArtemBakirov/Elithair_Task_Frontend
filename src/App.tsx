@@ -26,10 +26,9 @@ function App() {
   });
 
   // Filter slots by current period
-  const currentPeriodSlots =
-    slots.length > 0
-      ? slots.filter(slot => slot.period === pagination.currentPeriod)
-      : [];
+  const currentPeriodSlots = Array.isArray(slots)
+    ? slots.filter(slot => slot?.period === pagination.currentPeriod)
+    : [];
 
   // Get current slots for pagination
   const indexOfLastSlot = pagination.currentPage * pagination.slotsPerPage;
@@ -50,10 +49,27 @@ function App() {
   useEffect(() => {
     const fetchSlots = async () => {
       try {
-        const response = await axios.get(
+        const response = await axios.get<TimeSlot[]>(
           `${import.meta.env.VITE_BACKEND_PRODUCTION_BASE_URL}/slots`,
         );
-        setSlots(response.data);
+        console.log('Fetched slots from back', response.data);
+        // debug array issue
+        if (!Array.isArray(response.data)) {
+          console.error('API did not return an array:', response.data);
+          setSlots([]);
+          return;
+        }
+
+        // Ensure each item has the expected structure
+        const validSlots = response.data.filter(
+          item =>
+            item &&
+            typeof item === 'object' &&
+            '_id' in item &&
+            'period' in item,
+        );
+
+        setSlots(validSlots);
       } catch (error) {
         console.error('Error fetching slots:', error);
       }
