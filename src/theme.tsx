@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
-// A custom theme for this app
+// A custom theme for the app
 const theme = createTheme({
   cssVariables: true,
   palette: {

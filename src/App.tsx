@@ -4,7 +4,7 @@ import { TimeSlotComponent } from './components/TimeSlot';
 import { ReservationForm } from './components/ReservationForm';
 import { BookedSlots } from './components/BookedSlots';
 import axios from 'axios';
-import { TimeSlot, ReservationData } from './types/types';
+import { TimeSlot, ReservationData, PaginationState } from './types/types';
 
 /* custom css styles */
 import './Index.css';
@@ -19,7 +19,7 @@ function App() {
   const [slots, setSlots] = useState<TimeSlot[]>([]);
   const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [pagination, setPagination] = useState({
+  const [pagination, setPagination] = useState<PaginationState>({
     currentPage: 1,
     slotsPerPage: 5,
     currentPeriod: 'morning' as 'morning' | 'afternoon',
@@ -48,32 +48,12 @@ function App() {
 
   useEffect(() => {
     const fetchSlots = async () => {
-      console.log(
-        'Fetching slots from url',
-        import.meta.env.VITE_BACKEND_PRODUCTION_BASE_URL,
-      );
       try {
         const response = await axios.get<TimeSlot[]>(
           `${import.meta.env.VITE_BACKEND_PRODUCTION_BASE_URL}/slots`,
         );
-        console.log('Fetched slots from back', response.data);
-        // debug array issue
-        if (!Array.isArray(response.data)) {
-          console.error('API did not return an array:', response.data);
-          setSlots([]);
-          return;
-        }
 
-        // Ensure each item has the expected structure
-        const validSlots = response.data.filter(
-          item =>
-            item &&
-            typeof item === 'object' &&
-            '_id' in item &&
-            'period' in item,
-        );
-
-        setSlots(validSlots);
+        setSlots(response.data);
       } catch (error) {
         console.error('Error fetching slots:', error);
       }
@@ -90,7 +70,6 @@ function App() {
   };
 
   const handleSlotSelect = (slotId: string) => {
-    console.log('on select', slotId);
     setSelectedSlotId(slotId);
     setIsFormOpen(true);
   };

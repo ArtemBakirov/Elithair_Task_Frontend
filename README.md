@@ -29,7 +29,7 @@ React/TypeScript frontend for a meeting slot reservation system with consumable/
 - Chosen for simplicity as the app doesn't require complex state
 - All state logic is contained in `App.tsx` since the app is not that complex
 
-### 2. Component Structure
+### 2. Components:
 
 ```plaintext
 components/

@@ -23,4 +23,5 @@ export interface ReservationData {
 export interface PaginationState {
   currentPage: number;
   slotsPerPage: number;
+  currentPeriod: 'morning' | 'afternoon';
 }
