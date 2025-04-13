@@ -1,39 +1,44 @@
-# Material UI - Vite.js in TypeScript example
 
-## How to use
+<img src="https://elithairtransplant.com/german/wp-content/uploads/2024/03/elithair-logo-primary.svg" width="300" alt="Description"> 
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+# Task Assignment
+## Virtual Meeting Slot Reservation System - Frontend
 
-<!-- #repo-reference -->
+## Overview
+React/TypeScript frontend for a meeting slot reservation system with consumable/non-consumable time slots.
 
-```bash
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/material-ui-vite-ts
-cd material-ui-vite-ts
+## Technical Stack
+- React 19 with TypeScript
+- Vite build tool
+- Material-UI (MUI) components
+- Axios for API communication
+- React Hook Form for form handling
+
+## Key Features
+- Displays time slots from 10:00 AM - 3:00 PM and 3:45 PM - 5:45 PM
+- Supports two slot types:
+    - **Consumable**: Can only be booked once
+    - **Non-consumable**: Can be booked multiple times (with count display)
+- Responsive layout with flexbox
+- Pagination (5 slots per page for better UX)
+
+## Architecture Decisions
+
+### 1. State Management
+- Used React's built-in state management (`useState`, `useEffect`)
+- Chosen for simplicity as the app doesn't require complex state
+- All state logic is contained in `App.tsx` since the app is not that complex
+
+### 2. Component Structure
+
+```plaintext
+components/
+├── TimeSlot.tsx        - Individual slot display
+├── ReservationForm.tsx - Booking form modal
+└── BookedSlots.tsx     - Summary of booked slots
 ```
 
-Install it and run:
-
-```bash
-npm install
-npm run dev
-```
-
-or:
-
-<!-- #repo-reference -->
-
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/material-ui-vite-ts)
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/mui/material-ui/tree/master/examples/material-ui-vite-ts)
-
-## The idea behind the example
-
-This example uses [Vite.js](https://github.com/vitejs/vite).
-It includes `@mui/material` and its peer dependencies, including [Emotion](https://emotion.sh/docs/introduction), the default style engine in Material UI.
-
-## What's next?
-
-<!-- #host-reference -->
-
-You now have a working example project.
-You can head back to the documentation and continue by browsing the [templates](https://mui.com/material-ui/getting-started/templates/) section.
+### 3. UI/UX Decisions
+- Sticky section with booked slots on desktop for better navigation
+- Responsive layout with flexbox
+- Clear visual distinction between slot types
